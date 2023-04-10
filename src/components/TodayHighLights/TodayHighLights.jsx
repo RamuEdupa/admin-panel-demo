@@ -7,11 +7,27 @@ import NorthIcon from '@mui/icons-material/North';
 import SouthIcon from '@mui/icons-material/South';
 import { Box } from '@mui/system';
 import LevelIndicator from '../LevelIndicator/LevelIndicator';
+import ColoredCircle from '../ColoredCircle/ColoredCircle';
+import { style } from './styles';
+import pressureImg from '../../Assets/Images/dial-aneroid-sphygmomanometer-min-removebg-preview.png';
+import seaImage from '../../Assets/Images/vertical-overhead-shot-wavy-sea-against-seashore-min.jpg';
+import { useSelector } from 'react-redux';
 
 const SpanWrapper = styled.span`
   font-size: 15px;
   font-weight: normal;
   color: grey;
+`;
+const PressureImg = styled.img`
+  height: 120px;
+  max-height: 150px;
+  width: 100px;
+`;
+const SeaImg = styled.img`
+  height: 150px;
+  border-radius: 10px;
+  width: 132px;
+  align-self: center;
 `;
 
 const TodayHighLights = (props) => {
@@ -22,8 +38,12 @@ const TodayHighLights = (props) => {
   let windSpeed;
   let visibility;
   let visibilityStatus;
+  let pressure;
+  let seaLevel;
 
-  const { weatherData } = props;
+  // const { weatherData } = props;
+  const weatherData = useSelector((state) => state.weather.weatherData);
+
   if (weatherData) {
     const sunriseTimestamp = weatherData.sys.sunrise;
     const sunsetTimestamp = weatherData.sys.sunset;
@@ -54,11 +74,15 @@ const TodayHighLights = (props) => {
     } else {
       visibilityStatus = 'Poor';
     }
+    pressure = weatherData.main.pressure;
+    seaLevel = weatherData.weather[0].description;
   }
   return (
     <>
       <TodayHighLightCard>
-        <Typography variant='p'>UV Index</Typography>
+        <Typography variant='p'>Description</Typography>
+        <SeaImg src={seaImage} alt='pressure' />
+        <Typography variant='span'>{seaLevel}</Typography>
       </TodayHighLightCard>
       <TodayHighLightCard>
         <Typography variant='p'>Wind Status</Typography>
@@ -83,42 +107,20 @@ const TodayHighLights = (props) => {
           sx={{
             display: 'flex',
             justifyContent: 'space-around',
+            alignItems: 'center',
             width: '100%',
           }}>
-          <Box
-            sx={{
-              borderRadius: '25px',
-              backgroundColor: '#e5a639',
-              width: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '10px',
-            }}>
-            <NorthIcon sx={{ height: '20px', color: 'white' }} />
-          </Box>
+          <ColoredCircle>
+            <NorthIcon sx={{ height: '40px', color: 'white' }} />
+          </ColoredCircle>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant='span'>{sunriseTime}</Typography>
           </Box>
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            width: '100%',
-          }}>
-          <Box
-            sx={{
-              borderRadius: '25px',
-              backgroundColor: '#e5a639',
-              width: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '10px',
-            }}>
-            <SouthIcon sx={{ height: '20px', color: 'white' }} />
-          </Box>
+        <Box sx={style}>
+          <ColoredCircle>
+            <SouthIcon sx={{ height: '40px', color: 'white' }} />
+          </ColoredCircle>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant='span'>{sunsetTime}</Typography>
           </Box>
@@ -152,7 +154,12 @@ const TodayHighLights = (props) => {
         <Typography variant='p'>{visibilityStatus}</Typography>
       </TodayHighLightCard>
       <TodayHighLightCard>
-        <Typography variant='p'>Air Quality</Typography>
+        <Typography variant='p'>Pressure</Typography>
+        <Typography variant='h3'>
+          {pressure}
+          <SpanWrapper className='speed'> atm </SpanWrapper>
+          <PressureImg src={pressureImg} alt='pressure' />
+        </Typography>
       </TodayHighLightCard>
     </>
   );

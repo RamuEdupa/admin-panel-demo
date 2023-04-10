@@ -5,45 +5,24 @@ import {
   createTheme,
   ThemeProvider,
 } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import PublicIcon from '@mui/icons-material/Public';
-// import { mainListItems, secondaryListItems } from './listItems';
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
-// import styled from 'styled-components';
-
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '../Layout/Header/Header';
-import { Badge, Typography } from '@mui/material';
-import Weekcard from '../components/WeekCard/WeekCard';
-import TodayHighLights from '../components/TodayHighLights/TodayHighLights';
-import LocalSidebar from '../components/LocalSidebar/LocalSidebar';
+import { Divider, List, Typography } from '@mui/material';
+// import LocalSidebar from '../components/LocalSidebar/LocalSidebar';
+import MainListItems from '../Components/SidebarListItems/SidebarListItems';
+// import { fetchCountries } from '../Components/Reducers/countriesReducer';
+// import { fetchCountriesDetails } from '../Components/Reducers/countriesDetailsReducer';
+import Home from '../Pages/Home/Home';
+import { fetchWeatherData } from '../Components/Reducers/currentCityWeatherReducer';
+// import SideBar from '../Layout/Sidebar/SideBar';
 
-// function Copyright(props) {
-//   return (
-//     <Typography
-//       variant='body2'
-//       color='text.secondary'
-//       align='center'
-//       {...props}>
-//       {'Copyright © '}
-//       <Link color='inherit' href='https://mui.com/'>
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import CurrentCityVerticalBar from '../Components/CurrentCityVerticalBar/CurrentCityVerticalBar';
+import { fetchWeeklyWeatherData } from '../Components/Reducers/weeklyWeatherReducer';
 
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -79,31 +58,49 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = useState(true);
-  const [weatherData, setWeatherData] = useState();
-  // console.log({ weatherData });
-  // const { main, sys, weather } = weatherData;
+  // const [searchCountry, setSearchCountry] = useState();
+  const [locationError, setLocationError] = useState('');
+  const [longitude, setLongitude] = useState();
+  const [latitude, setLatitude] = useState();
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  const dispatch = useDispatch();
+
+  // const countriesDetails = useSelector(
+  //   (state) => state.countriesDetails.countriesDetailsList,
+  // );
+
+  const errorCallback = () => {
+    setLocationError('No Data Available!');
+  };
   useEffect(() => {
     // Get the user's location
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
-      // Fetch the weather data from the API
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=0b517825ed8b0bf9742d3b83cafdc633&units=metric`;
-      // const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely&appid=0b517825ed8b0bf9742d3b83cafdc633&units=metric`;
-      const response = await axios.get(url);
-      console.log({ response });
+      setLatitude(latitude);
+      setLongitude(longitude);
+    }, errorCallback);
+    const axesObj = { latitude, longitude };
+    dispatch(fetchWeeklyWeatherData(axesObj));
+    dispatch(fetchWeatherData(axesObj));
+  }, [dispatch, latitude, longitude]);
 
-      setWeatherData(response.data);
-    });
-  }, []);
+  const handleCountries = async () => {
+    const countriesUrl2 = 'https://date.nager.at/api/v3/AvailableCountries';
+    const countriesUrl = 'https://restcountries.com/v2/all';
+    const res1 = await axios.get(countriesUrl2);
+    const res2rest = await axios.get(countriesUrl);
+    // console.log({ res1 });
+    // console.log({ res2rest });
+  };
 
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
+        {/* <CssBaseline /> */}
         <Header open={open} toggleDrawer={toggleDrawer} />
         {/* Sidebar */}
         <Drawer variant='permanent' open={open} sx={{ height: '100vh' }}>
@@ -114,48 +111,42 @@ function DashboardContent() {
               justifyContent: 'flex-end',
               px: [1],
             }}>
-            <Typography variant='h6' container='div' fontWeight={600}>
-              Weather DashBoard
-            </Typography>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
-          <IconButton color='inherit'>
-            <PublicIcon/>
-            <Typography>Countries</Typography>
-          </IconButton>
+          <Divider />
           {/* Local Sidebar for cuurent city*/}
-          <LocalSidebar weatherData={weatherData} />
+          {/* <LocalSidebar weatherData={weatherData} /> */}
+          <List component='nav'>
+            <MainListItems handleCountries={handleCountries} />
+          </List>
         </Drawer>
-        <Box
-          component='main'
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-          }}>
-          <Toolbar />
-          <Container maxWidth='xl' sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={2}>
-              {weekDays.map((day) => (
-                <Weekcard key={day} day={day} />
-              ))}
-            </Grid>
-          </Container>
-          <Container maxWidth='xl' sx={{ mt: 4, mb: 4 }}>
-            <Typography variant='h6' fontWeight={600}>
-              Today's Highlights
-            </Typography>
-            <Grid container spacing={2}>
-              <TodayHighLights weatherData={weatherData} />
-            </Grid>
-          </Container>
-        </Box>
+        {!locationError ? (
+          <Box
+            component='main'
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              marginTop: '60px',
+            }}>
+            <CurrentCityVerticalBar />
+            <Box component='div'>
+              {/* Home Page */}
+              <Home weekDays={weekDays} />
+              {/* <Countries /> */}
+            </Box>
+          </Box>
+        ) : (
+          <Typography variant='h1' container='div' alignSelf='center'>
+            No Data Available!!!
+          </Typography>
+        )}
       </Box>
     </ThemeProvider>
   );

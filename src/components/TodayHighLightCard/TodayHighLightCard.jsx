@@ -7,7 +7,7 @@ const TodayHighLightCard = (props) => {
       <Grid item xs={4}>
         <Paper
           sx={{
-            height: '250px',
+            height: '200px',
             p: '9px 10px',
             display: 'flex',
             flexDirection: 'column',

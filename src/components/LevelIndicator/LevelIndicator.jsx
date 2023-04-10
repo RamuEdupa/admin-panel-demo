@@ -2,8 +2,7 @@ import React from 'react';
 import { LinearProgress, Box } from '@mui/material';
 
 function LevelIndicator(props) {
-  const level = props.level;
-
+  const level = parseInt(props.level);
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column-reverse', height: 100 }}>
       <LinearProgress

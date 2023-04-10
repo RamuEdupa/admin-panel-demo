@@ -9,7 +9,13 @@ const TempContainer = styled.div`
 `;
 
 const Weekcard = (props) => {
-  const { day } = props;
+  const { dayObj } = props;
+  let day = new Date(dayObj.dt * 1000).toLocaleString('en-US', {
+    weekday: 'short',
+  });
+  let maxTemp = parseInt(dayObj.temp.max) - 273;
+  let minTemp = parseInt(dayObj.temp.min) - 273;
+  // console.log({ day });
   return (
     <Grid item xs={1.7}>
       <Paper
@@ -20,13 +26,15 @@ const Weekcard = (props) => {
           justifyContent: 'center',
           alignItems: 'center',
           height: 150,
-          width: 120,
+          maxWidth: 95,
+          minWidth: 70,
+          flexWrap: 'wrap',
         }}>
         <p>{day}</p>
         <img src={icon} alt='weather icon' />
         <TempContainer>
-          <span>30&deg;C</span>
-          <span>12&deg;C</span>
+          <span>{maxTemp}&deg;</span>
+          <span>{minTemp}&deg;</span>
         </TempContainer>
       </Paper>
     </Grid>
