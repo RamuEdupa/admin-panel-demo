@@ -18,8 +18,9 @@ import NotFound from '../Components/Not Found/NotFound';
 import SideBar from '../Layout/sideBar/SideBar';
 import RenderLineChart from '../Pages/charts/Chart';
 import Countries from '../Pages/countries/Countries';
+import CountryDetails from '../Pages/countryDetails/CountryDetails';
 
-const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+// const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const mdTheme = createTheme();
 
@@ -50,6 +51,7 @@ function DashboardContent() {
                 />
                 <Route path='/chart' element={<RenderLineChart />} />
                 <Route path='/countries' element={<Countries />} />
+                <Route path='/countryDetails' element={<CountryDetails />} />
               </>
             ) : (
               <NotFound />

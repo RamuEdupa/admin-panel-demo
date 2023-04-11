@@ -6,10 +6,23 @@ import {
   Grid,
   IconButton,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { fetchCountriesDetails } from '../reducers/countriesDetailsReducer';
+import { fetchCountryDetails } from '../reducers/countriesReducer';
 
 const CountryCard = (props) => {
   const { country } = props;
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const countryDetailsHandler = () => {
+    dispatch(fetchCountryDetails(country.countryCode));
+    navigate('/countryDetails');
+  };
 
   return (
     <>
@@ -24,6 +37,7 @@ const CountryCard = (props) => {
             title={`${country.name}(${country.countryCode})`}
           />
           <Button
+            onClick={countryDetailsHandler}
             variant='outlined'
             sx={{
               alignSelf: 'center',

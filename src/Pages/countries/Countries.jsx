@@ -15,23 +15,23 @@ const Countries = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCountries());
-  }, []);
+  }, [dispatch]);
 
   const countriesList = useSelector((state) => state.countries.listOfCountries);
   console.log({ countriesList });
   return (
-    <section style={{ margin: '0 20px',}}>
+    <section style={{ margin: '0 20px' }}>
       <Paper
-      elevation={0}
+        elevation={0}
         sx={{
           height: '100%',
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
-         
+
           // justifyContent: 'center',
           // alignItems: 'center',
-         
+
           marginTop: '90px',
         }}>
         <Typography variant='h5' fontWeight='bold'>
@@ -41,7 +41,7 @@ const Countries = () => {
           <CustomizedInputBase />
         </Box>
         <Grid container spacing={4}>
-          {countriesList.slice(0, 12).map((country) => (
+          {countriesList.map((country) => (
             <CountryCard key={country.name} country={country} />
           ))}
         </Grid>

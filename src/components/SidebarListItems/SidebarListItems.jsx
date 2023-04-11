@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -14,42 +14,59 @@ import { Link } from 'react-router-dom';
 
 const linkStyle = { textDecoration: 'none', color: 'inherit' };
 
-const MainListItems = (props) => {
-  const { handleCountries } = props;
+const MainListItems = () => {
+  const [selectedTab, setSelectedTab] = useState('dashboard');
+
   return (
     <React.Fragment>
       <Link to='/' style={linkStyle}>
-        <ListItemButton>
+        <ListItemButton
+          onClick={() => setSelectedTab('dashboard')}
+          sx={{
+            backgroundColor: `${
+              selectedTab === 'dashboard' ? 'lightgrey' : null
+            }`,
+          }}>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary='Weather Dashboard' />
         </ListItemButton>
       </Link>
-      <Link
-        to='/countries'
-        style={linkStyle}>
-        <ListItemButton onClick={handleCountries}>
+      <Link to='/countries' style={linkStyle}>
+        <ListItemButton
+          onClick={() => setSelectedTab('countries')}
+          sx={{
+            backgroundColor: `${
+              selectedTab === 'countries' ? 'lightgrey' : null
+            }`,
+          }}>
           <ListItemIcon>
             <PublicIcon />
           </ListItemIcon>
           <ListItemText primary='Countries' />
         </ListItemButton>
       </Link>
-      <Link to='/chart'  style={linkStyle}>
-        <ListItemButton>
+      <Link to='/chart' style={linkStyle}>
+        <ListItemButton
+          onClick={() => setSelectedTab('chart')}
+          sx={{
+            backgroundColor: `${selectedTab === 'chart' ? 'lightgrey' : null}`,
+          }}>
           <ListItemIcon>
             <BarChartIcon />
           </ListItemIcon>
           <ListItemText primary='Chart' />
         </ListItemButton>
       </Link>
-      <ListItemButton>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary='Customers' />
-      </ListItemButton>
+      <Link to='/countryDetails' style={linkStyle}>
+        <ListItemButton>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary='Customers' />
+        </ListItemButton>
+      </Link>
       <ListItemButton>
         <ListItemIcon>
           <LayersIcon />
