@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import styled from 'styled-components';
 import CountryCard from '../../components/CountryCard/CountryCard';
-import CustomizedInputBase from '../../components/TextInput/TextInput';
+import CustomizedInputBase from '../../Components/textInput/TextInput';
 
 const HeaderWrapper = styled.header`
   padding: 10px;
@@ -11,7 +11,7 @@ const HeaderWrapper = styled.header`
 
 const Countries = () => {
   return (
-    <main>
+    <section>
       <HeaderWrapper>
         <Typography variant='h5' fontWeight='bold'>
           Countries
@@ -25,7 +25,7 @@ const Countries = () => {
           ))}
         </Grid>
       </HeaderWrapper>
-    </main>
+    </section>
   );
 };
 

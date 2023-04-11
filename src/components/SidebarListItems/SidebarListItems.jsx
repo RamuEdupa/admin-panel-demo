@@ -9,34 +9,46 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Link } from 'react-router-dom';
+// import styled from 'styled-components';
+
+const linkStyle = { textDecoration: 'none', color: 'inherit' };
 
 const MainListItems = (props) => {
   const { handleCountries } = props;
   return (
     <React.Fragment>
-      <ListItemButton>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary='Weather Dashboard' />
-      </ListItemButton>
-      <ListItemButton onClick={handleCountries}>
-        <ListItemIcon>
-          <PublicIcon />
-        </ListItemIcon>
-        <ListItemText primary='Countries' />
-      </ListItemButton>
+      <Link to='/' style={linkStyle}>
+        <ListItemButton>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary='Weather Dashboard' />
+        </ListItemButton>
+      </Link>
+      <Link
+        to='/countries'
+        style={linkStyle}>
+        <ListItemButton onClick={handleCountries}>
+          <ListItemIcon>
+            <PublicIcon />
+          </ListItemIcon>
+          <ListItemText primary='Countries' />
+        </ListItemButton>
+      </Link>
+      <Link to='/chart'  style={linkStyle}>
+        <ListItemButton>
+          <ListItemIcon>
+            <BarChartIcon />
+          </ListItemIcon>
+          <ListItemText primary='Chart' />
+        </ListItemButton>
+      </Link>
       <ListItemButton>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
         <ListItemText primary='Customers' />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary='Reports' />
       </ListItemButton>
       <ListItemButton>
         <ListItemIcon>

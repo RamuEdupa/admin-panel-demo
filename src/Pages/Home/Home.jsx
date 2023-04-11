@@ -1,14 +1,35 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import CurrentCityVerticalBar from '../../Components/currentCityVerticalBar/CurrentCityVerticalBar';
 import TodayHighLights from '../../Components/TodayHighLights/TodayHighLights';
 import Weekcard from '../../Components/WeekCard/WeekCard';
+import { useDispatch } from 'react-redux';
+import { fetchWeatherData } from '../../Components/reducers/weatherReducer';
+import { fetchWeeklyWeatherData } from '../../Components/reducers/weatherReducer';
 
-const Home = () => {
-  // const { weekDays } = props;
-
+const Home = (props) => {
+  const { setLocationError } = props;
+  const [longitude, setLongitude] = useState();
+  const [latitude, setLatitude] = useState();
   const weeklyWeather = useSelector((state) => state.weather.weeklyWeatherData);
+
+  const dispatch = useDispatch();
+
+  const errorCallback = () => {
+    setLocationError('No Data Available!');
+  };
+  useEffect(() => {
+    // Get the user's location
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      setLatitude(latitude);
+      setLongitude(longitude);
+    }, errorCallback);
+    const axesObj = { latitude, longitude };
+    dispatch(fetchWeeklyWeatherData(axesObj));
+    dispatch(fetchWeatherData(axesObj));
+  }, [dispatch, latitude, longitude]);
 
   // console.log({ weeklyWeather });
   return (

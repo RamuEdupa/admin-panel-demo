@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './Api/store';
 import { useAuth0 } from '@auth0/auth0-react';
 import SignInPage from './Login/Login';
-import { RenderLineChart } from './Components/charts/Chart';
+// import { RenderLineChart } from './Components/charts/Chart';
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -18,7 +18,7 @@ function App() {
         <>
           <Provider store={store}>
             <DashBoard />
-            <RenderLineChart />
+            {/* <RenderLineChart /> */}
           </Provider>
         </>
       )}

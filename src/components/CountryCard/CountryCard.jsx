@@ -1,33 +1,39 @@
 import {
   Avatar,
+  Button,
   Card,
-  CardContent,
   CardHeader,
   Grid,
   IconButton,
 } from '@mui/material';
 import React from 'react';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const CountryCard = (props) => {
+  const { country } = props;
+
   return (
     <>
       <Grid item xs={3}>
-        <Card>
+        <Card sx={{ display: 'flex', flexDirection: 'column' }}>
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: 'red[500]' }} aria-label='recipe'>
                 R
               </Avatar>
             }
-            action={
-              <IconButton aria-label='settings'>
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title='Shrimp and Chorizo Paella'
-            subheader='September 14, 2016'
+            title={`${country.name}(${country.countryCode})`}
           />
+          <Button
+            variant='outlined'
+            sx={{
+              alignSelf: 'center',
+              width: '100%',
+              color: 'grey',
+              borderColor: 'lightgrey',
+            }}
+            aria-label='settings'>
+            View Details
+          </Button>
         </Card>
       </Grid>
     </>

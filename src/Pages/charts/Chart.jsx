@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -57,9 +57,9 @@ import {
 //   },
 // ];
 
-export const RenderLineChart = () => {
+const RenderLineChart = () => {
   const weatherData = useSelector((state) => state.weather.weeklyWeatherData);
-//   console.log('chart-----', weatherData);
+  //   console.log('chart-----', weatherData);
   let data = [];
   if (weatherData) {
     data = weatherData.map((each, index) => ({
@@ -71,10 +71,17 @@ export const RenderLineChart = () => {
   console.log('dataaaaa', data);
 
   return (
-    <Box sx={{ width: '100%', height: '100%' }}>
+    <Paper
+      sx={{
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <LineChart
-        width={500}
-        height={300}
+        width={1200}
+        height={700}
         data={data}
         margin={{
           top: 5,
@@ -95,9 +102,10 @@ export const RenderLineChart = () => {
         />
         <Line type='monotone' dataKey='min' stroke='#82ca9d' />
       </LineChart>
-    </Box>
+    </Paper>
   );
 };
+export default RenderLineChart;
 
 // let a = [
 //   { name: 'week 1', max: 38, min: 27 },

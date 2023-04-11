@@ -69,7 +69,7 @@ export const fetchSearchPlaceData = createAsyncThunk(
       return await axios
         .get(url)
         .then((response) => {
-          console.log({ response });
+          // console.log({ response });
           return response.data;
         })
         .catch((err) => console.log(err));
