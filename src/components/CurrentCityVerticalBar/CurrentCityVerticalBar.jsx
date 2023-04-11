@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import CustomizedInputBase from '../TextInput/TextInput';
+import CustomizedInputBase from '../textInput/TextInput';
 import styled from 'styled-components';
 import sunLogo from '../../Assets/amcharts_weather_icons/static/day.svg';
 import CloudsImage from '../../Assets/amcharts_weather_icons/static/cloudy-day-1.svg';
+import RainImage from '../../Assets/amcharts_weather_icons/static/rainy-1.svg';
+import clearImage from '../../Assets/amcharts_weather_icons/static/day.svg';
+import HazeImage from '../../Assets/amcharts_weather_icons/static/snowy-3.svg';
 import image from '../../Assets/Images/peaceful-meadow-with-trees-distance.jpg';
 import { useSelector } from 'react-redux';
 
 const DivWrapper = styled.div`
-  /* width: 20vw; */
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -30,29 +32,38 @@ const DivWrapper = styled.div`
 `;
 
 const CurrentCityVerticalBar = () => {
-
   const weather = useSelector((state) => state.weather.weatherData);
+  // const weatherErr = useSelector((state) => state.weather.searchErrors);
   let temp;
   let place;
   let date;
   let weatherStatus;
   let weatherStatusImg;
   if (weather) {
+    // if (!isNaN(weather.name)) {
+    //   alert('Please provide valid city name');
+    // }
     temp = weather.main.temp;
     place = weather.name;
     date = new Date(weather.dt * 1000).toLocaleDateString();
     weatherStatus = weather.weather[0].main;
     if (weatherStatus === 'Clouds') {
       weatherStatusImg = CloudsImage;
+    } else if (weatherStatus === 'Haze') {
+      weatherStatusImg = HazeImage;
+    } else if (weatherStatus === 'Clear') {
+      weatherStatusImg = clearImage;
+    } else if (weatherStatus === 'Rain') {
+      weatherStatusImg = RainImage;
     }
   }
   return (
     <DivWrapper>
-      <CustomizedInputBase  />
+      <CustomizedInputBase />
       <div>
         <img src={sunLogo} alt='day' className='sun-logo' />
       </div>
-      <h1>{temp}&deg;C</h1>
+      <h1>{parseInt(temp) - 273}&deg;C</h1>
       <h1>{place}</h1>
       <p>{date}</p>
 

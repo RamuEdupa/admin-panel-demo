@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 // import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSearchPlaceData } from '../Reducers/weeklyWeatherReducer';
+import { fetchSearchPlaceData } from '../reducers/weatherReducer';
 // import DirectionsIcon from '@mui/icons-material/Directions';
 
 export default function CustomizedInputBase() {
@@ -20,9 +20,7 @@ export default function CustomizedInputBase() {
     dispatch(fetchSearchPlaceData(searchPlaceVal));
   }, [searchPlaceVal, dispatch]);
 
-  const serchPlaceData = useSelector(
-    (state) => state.weeklyWeather.searchPlaceList,
-  );
+  const serchPlaceData = useSelector((state) => state.weather.searchPlaceList);
   console.log({ serchPlaceData });
   const searchHandler = () => {
     setSearchPlaceVal(searchPlace);

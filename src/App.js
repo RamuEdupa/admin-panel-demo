@@ -5,17 +5,23 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from './Api/store';
 import { useAuth0 } from '@auth0/auth0-react';
-import SignInSide from './Login/Login';
+import SignInPage from './Login/Login';
+import { RenderLineChart } from './Components/charts/Chart';
 
 function App() {
-  const {  isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   return (
     <>
-    {!isAuthenticated && <SignInSide/>}
-    {isAuthenticated && <Provider store={store}>
-      <DashBoard />
-    </Provider>}
+      {!isAuthenticated && <SignInPage />}
+      {isAuthenticated && (
+        <>
+          <Provider store={store}>
+            <DashBoard />
+            <RenderLineChart />
+          </Provider>
+        </>
+      )}
     </>
   );
 }

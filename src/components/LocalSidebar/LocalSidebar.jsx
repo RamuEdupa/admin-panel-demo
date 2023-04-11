@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import sunLogo from '../../Assets/amcharts_weather_icons/static/day.svg';
 import image from '../../Assets/Images/peaceful-meadow-with-trees-distance.jpg';
-import CustomizedInputBase from '../../components/TextInput/TextInput';
+import CustomizedInputBase from '../textInput/TextInput';
 
 const NavWrapper = styled.div`
   padding: 10px;

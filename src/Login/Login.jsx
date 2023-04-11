@@ -33,7 +33,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInSide() {
+export default function SignInPage() {
   const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   const handleSubmit = (event) => {

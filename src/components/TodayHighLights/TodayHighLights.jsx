@@ -1,13 +1,13 @@
 import React from 'react';
-import TodayHighLightCard from '../TodayHighLightCard/TodayHighLightCard';
+import TodayHighLightCard from '../todayHighLightCard/TodayHighLightCard';
 import styled from 'styled-components';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { Typography } from '@mui/material';
 import NorthIcon from '@mui/icons-material/North';
 import SouthIcon from '@mui/icons-material/South';
 import { Box } from '@mui/system';
-import LevelIndicator from '../LevelIndicator/LevelIndicator';
-import ColoredCircle from '../ColoredCircle/ColoredCircle';
+import LevelIndicator from '../levelIndicator/LevelIndicator';
+import ColoredCircle from '../coloredCircle/ColoredCircle';
 import { style } from './styles';
 import pressureImg from '../../Assets/Images/dial-aneroid-sphygmomanometer-min-removebg-preview.png';
 import seaImage from '../../Assets/Images/vertical-overhead-shot-wavy-sea-against-seashore-min.jpg';

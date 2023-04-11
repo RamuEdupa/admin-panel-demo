@@ -1,15 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import countriesReducer from '../Components/Reducers/countriesReducer';
-import countriesDetailsReducer from '../Components/Reducers/countriesDetailsReducer';
-import currentWeatherReducer from '../Components/Reducers/currentCityWeatherReducer';
-import weeklyWeatherReducer from '../Components/Reducers/weeklyWeatherReducer';
+import weatherReducer from '../Components/reducers/weatherReducer';
 
 export const store = configureStore({
   reducer: {
-    countries: countriesReducer,
-    countriesDetails: countriesDetailsReducer,
-    weather: currentWeatherReducer,
-    weeklyWeather: weeklyWeatherReducer
+    weather: weatherReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
